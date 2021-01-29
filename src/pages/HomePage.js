@@ -5,6 +5,7 @@ import { ClipLoader } from 'react-spinners';
 import JumbotronBlog from '../components/JumbotronBlog';
 import PaginationBar from '../components/PaginationBar';
 import blogActions from '../redux/actions/blog.actions';
+import SearchForm from '../components/SearchForm';
 import BlogCard from '../components/BlogCard';
 
 const HomePage = () => {
@@ -14,10 +15,23 @@ const HomePage = () => {
   const loading = useSelector((state) => state.blog.loading);
   const totalPages = useSelector((state) => state.blog.totalPages);
 
+  const [searchInput, setSearchInput] = useState('');
+  const [query, setQuery] = useState('');
+
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(blogActions.getBlogs(pageNum, limit));
-  }, [dispatch, pageNum, limit]);
+    dispatch(blogActions.getBlogs(pageNum, limit, query));
+  }, [dispatch, pageNum, limit, query]);
+
+  // Search
+  const handleSearchInputChange = (e) => {
+    setSearchInput(e.target.value);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setQuery(searchInput);
+    setSearchInput('');
+  };
 
   const shouldShowPagination = blogs.length > 0 && totalPages > 1 && !loading;
 
@@ -27,6 +41,13 @@ const HomePage = () => {
 
       <Row>
         <Col>
+          <SearchForm
+            loading={loading}
+            searchInput={searchInput}
+            handleSearchChange={handleSearchInputChange}
+            handleSubmit={handleSubmit}
+          />
+
           {loading ? (
             <div className='text-center mt-5'>
               <ClipLoader color='#f86c6b' size={150} loading={true} />

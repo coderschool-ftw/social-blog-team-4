@@ -49,9 +49,13 @@
 .Reactions > div:first-of-type > div:last-of-type {
   font-size: 16px;
   white-space: nowrap;
-  width: 17px !important;
+  width: 14px !important;
   overflow: hidden;
   margin-top: 8px !important;
+}
+
+.Reactions > div:first-of-type > div.LikeButton {
+  width: 16px !important;
 }
 
 .Reactions > div:last-of-type > div > div {

@@ -44,7 +44,7 @@ const Reactions = ({ blog, dispatch, id }) => {
           style={{ marginTop: '-4px', marginLeft: '8px' }}
           onClick={toggleReactionsSelector}
         >
-          <div className='d-flex flex-column justify-items-center justify-content-center'>
+          <div className='LikeButton d-flex flex-column justify-items-center justify-content-center'>
             <svg
               aria-hidden='true'
               focusable='false'

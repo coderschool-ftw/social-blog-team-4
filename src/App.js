@@ -8,6 +8,7 @@ import RegisterPage from './pages/RegisterPage';
 import HomePage from './pages/HomePage';
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminPage from './pages/AdminPage';
+import AddBlog from './pages/AddBlog';
 import BlogDetailPage from './pages/BlogDetailPage';
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
       <Switch>
         <Route path='/login' exact component={Login} />
         <Route path='/register' exact component={RegisterPage} />
+        <Route path='/blog/add' exact component={AddBlog} />
         <Route path='/blogs/:id' exact component={BlogDetailPage} />
         <Route path='/' exact component={HomePage} />
         <ProtectedRoute
