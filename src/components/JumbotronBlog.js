@@ -1,6 +1,7 @@
-import React from 'react';
-import { Jumbotron, Button } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import React from "react";
+import { Jumbotron, Button } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const JumbotronBlog = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -9,9 +10,9 @@ const JumbotronBlog = () => {
       <h1>Social Blog</h1>
       <p>Write about your amazing experiences.</p>
       {isAuthenticated && (
-        <p>
-          <Button variant='primary'>Write now</Button>
-        </p>
+        <Link to="/blog/add">
+          <Button variant="primary">Write now</Button>
+        </Link>
       )}
     </Jumbotron>
   );
