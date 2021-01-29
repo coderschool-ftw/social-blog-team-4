@@ -22,9 +22,40 @@ const getBlog = (blogId) => async (dispatch) => {
     dispatch({ type: types.GET_BLOG_FAILURE, payload: error });
   }
 };
+
+const submitReaction = (targetType, targetId, emoji) => async (dispatch) => {
+  dispatch({ type: types.BLOG_REACTION_REQUEST });
+
+  try {
+    let url = '/reactions';
+    const response = await api.post(url, {
+      targetType,
+      targetId,
+      emoji,
+    });
+
+    if (response.data.success) {
+      dispatch({
+        type: types.BLOG_REACTION_SUCCESS,
+        payload: response.data.data,
+      });
+    }
+
+    if (response.errors) {
+      dispatch({
+        type: types.BLOG_REACTION_FAILURE,
+        payload: response.errors,
+      });
+    }
+  } catch (error) {
+    dispatch({ type: types.BLOG_REACTION_FAILURE, payload: error });
+  }
+};
+
 const blogActions = {
   getBlogs,
   getBlog,
+  submitReaction,
 };
 
 export default blogActions;
