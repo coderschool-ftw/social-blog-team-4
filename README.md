@@ -33,13 +33,13 @@ To create a GIF, use [LiceCap](http://www.cockos.com/licecap/), [RecordIt](http:
 - [x] 🚀 After login, user can react (laugh, like, sad, love, angry) to blog posts
 - [ ] 🚀 Pagination for blogs, reviews
 - [ ] 🚀 Searching and sorting of blogs
-- [ ] 🚀 User can send friend request to another user
-- [ ] 🚀 User can accept/decline a friend request
-- [ ] 🚀 User can see list of his/her friends
+- [x] 🚀 User can send friend request to another user
+- [x] 🚀 User can accept/decline a friend request
+- [x] 🚀 User can see list of his/her friends
 
 ### The following **additional** features are implemented:
 
-- [ ] 🚀🚀🚀 User can edit their profile
+- [x] 🚀🚀🚀 User can edit their profile
 
 <!-- ## Time Spent and Lessons Learned -->
 <!-- Time spent: **X** hours spent in total. -->

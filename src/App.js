@@ -8,6 +8,8 @@ import RegisterPage from './pages/RegisterPage';
 import HomePage from './pages/HomePage';
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminPage from './pages/AdminPage';
+import FriendPage from './pages/FriendPage';
+import BlogAdminPage from './pages/BlogAdminPage';
 import AddBlog from './pages/AddBlog';
 import BlogDetailPage from './pages/BlogDetailPage';
 
@@ -24,6 +26,14 @@ function App() {
         <ProtectedRoute
           path='/admin/profile'
           render={(props) => <AdminPage {...props} />}
+        />
+        <ProtectedRoute
+          path='/admin/blogs'
+          render={(props) => <BlogAdminPage {...props} />}
+        />
+        <ProtectedRoute
+          path='/admin/friends'
+          render={(props) => <FriendPage {...props} />}
         />
       </Switch>
     </div>
