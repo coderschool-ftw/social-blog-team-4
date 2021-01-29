@@ -1,5 +1,4 @@
 .App {
-  text-align: center;
 }
 
 .App-logo {
@@ -36,6 +35,7 @@
     transform: rotate(360deg);
   }
 }
+
 .link-button {
   background-color: transparent;
   border: none;
@@ -49,4 +49,30 @@
 .link-button:hover,
 .link-button:focus {
   text-decoration: none;
+}
+
+.Reactions > div:first-of-type {
+  align-items: center;
+  font-size: 32px !important;
+}
+
+.Reactions > div:first-of-type > div {
+  width: 32px !important;
+  height: 32px !important;
+}
+
+.Reactions > div:first-of-type > div:last-of-type {
+  font-size: 16px;
+  white-space: nowrap;
+  width: 14px !important;
+  overflow: hidden;
+  margin-top: 8px !important;
+}
+
+.Reactions > div:first-of-type > div.LikeButton {
+  width: 16px !important;
+}
+
+.Reactions > div:last-of-type > div > div {
+  width: 64px !important;
 }

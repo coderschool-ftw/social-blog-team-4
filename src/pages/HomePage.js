@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Container, Card, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import { ClipLoader } from 'react-spinners';
 import JumbotronBlog from '../components/JumbotronBlog';
 import PaginationBar from '../components/PaginationBar';
 import blogActions from '../redux/actions/blog.actions';
-import Moment from 'react-moment';
+import SearchForm from '../components/SearchForm';
+import BlogCard from '../components/BlogCard';
 
 const HomePage = () => {
   const [pageNum, setPageNum] = useState(1);
@@ -13,62 +14,61 @@ const HomePage = () => {
   const blogs = useSelector((state) => state.blog.blogs);
   const loading = useSelector((state) => state.blog.loading);
   const totalPages = useSelector((state) => state.blog.totalPages);
+
+  const [searchInput, setSearchInput] = useState('');
+  const [query, setQuery] = useState('');
+
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(blogActions.getBlogs(pageNum, limit));
-  }, [dispatch, pageNum, limit]);
+    dispatch(blogActions.getBlogs(pageNum, limit, query));
+  }, [dispatch, pageNum, limit, query]);
 
-  const addDefaultSrc = (e) => {
-    e.target.src = 'https://media.giphy.com/media/l2JJDrvnFUEboRgSQ/giphy.gif';
+  // Search
+  const handleSearchInputChange = (e) => {
+    setSearchInput(e.target.value);
   };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setQuery(searchInput);
+    setSearchInput('');
+  };
+
+  const shouldShowPagination = blogs.length > 0 && totalPages > 1 && !loading;
+
   return (
     <Container>
-      <JumbotronBlog />
-      <PaginationBar
-        pageNum={pageNum}
-        setPageNum={setPageNum}
-        totalPageNum={totalPages}
-      />
+      {pageNum === 1 && <JumbotronBlog />}
+
       <Row>
         <Col>
+          <SearchForm
+            loading={loading}
+            searchInput={searchInput}
+            handleSearchChange={handleSearchInputChange}
+            handleSubmit={handleSubmit}
+          />
+
           {loading ? (
-            <div className='text-center'>
+            <div className='text-center mt-5'>
               <ClipLoader color='#f86c6b' size={150} loading={true} />
             </div>
           ) : (
             <ul className='list-unstyled d-flex flex-wrap justify-content-between'>
               {blogs.map((b) => (
-                <li key={b._id}>
-                  <Card
-                    style={{
-                      width: '18rem',
-                      marginBottom: '2rem',
-                    }}
-                  >
-                    <Card.Img
-                      variant='top'
-                      src={
-                        b.images.length > 0
-                          ? b.images[0]
-                          : 'https://media.giphy.com/media/l2JJDrvnFUEboRgSQ/giphy.gif'
-                      }
-                      onError={addDefaultSrc}
-                    />
-                    <Card.Body>
-                      <Card.Title>{b.title}</Card.Title>
-                      <Card.Text>{b.content}</Card.Text>
-                    </Card.Body>
-                    <Card.Footer className='text-muted'>
-                      @{b.author.name} wrote{' '}
-                      <Moment fromNow>{b.createdAt}</Moment>
-                    </Card.Footer>
-                  </Card>
-                </li>
+                <BlogCard key={b._id} blog={b} />
               ))}
             </ul>
           )}
         </Col>
       </Row>
+
+      {shouldShowPagination && (
+        <PaginationBar
+          pageNum={pageNum}
+          setPageNum={setPageNum}
+          totalPageNum={totalPages}
+        />
+      )}
     </Container>
   );
 };
