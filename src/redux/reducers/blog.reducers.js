@@ -1,12 +1,14 @@
 import * as types from '../constants/blog.constants';
 const initialState = {
   blogs: [],
+  blog: null,
   totalPages: 1,
   loading: false,
 };
 
 const blogReducer = (state = initialState, action) => {
   const { type, payload } = action;
+
   switch (type) {
     case types.GET_BLOGS_REQUEST:
       return { ...state, loading: true };
@@ -22,6 +24,15 @@ const blogReducer = (state = initialState, action) => {
     case types.GET_BLOGS_FAILURE:
       return { ...state, loading: false };
 
+    case types.GET_BLOG_REQUEST:
+      return { ...state, loading: true };
+
+    case types.GET_BLOG_SUCCESS:
+      return { ...state, blog: payload, loading: false };
+
+    case types.GET_BLOG_FAILURE:
+      return { ...state };
+    // TODO
     default:
       return state;
   }
