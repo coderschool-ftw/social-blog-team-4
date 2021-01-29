@@ -1,7 +1,7 @@
-import * as types from '../constants/auth.constants';
+import * as types from "../constants/auth.constants";
 const initialState = {
   user: null,
-  isAuthenticated: !!localStorage.getItem('token'),
+  isAuthenticated: !!localStorage.getItem("token"),
   loading: false,
   error: null,
 };
@@ -11,13 +11,17 @@ const authReducer = (state = initialState, action) => {
   switch (type) {
     case types.LOGIN_STARTED:
     case types.REGISTER_STARTED:
+    case types.GET_CURRENT_USER_STARTED:
+    case types.UPDATE_PROFILE_STARTED:
       return { ...state, loading: true };
 
     case types.LOGIN_SUCCESS:
       return { ...state, user: payload, isAuthenticated: true, loading: false };
     case types.REGISTER_SUCCESS:
+    case types.UPDATE_PROFILE_SUCCESS:
       return { ...state, loading: false };
-
+    case types.GET_CURRENT_USER_SUCCESS:
+      return { ...state, user: payload, loading: false };
     case types.LOGIN_FAIL:
       return {
         ...state,
@@ -27,6 +31,8 @@ const authReducer = (state = initialState, action) => {
         loading: false,
       };
     case types.REGISTER_FAIL:
+    case types.GET_CURRENT_USER_FAIL:
+    case types.UPDATE_PROFILE_FAIL:
       return { ...state, loading: false };
 
     case types.LOGOUT:
