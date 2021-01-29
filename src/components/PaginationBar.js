@@ -5,6 +5,7 @@ const PaginationBar = ({ pageNum, setPageNum, totalPageNum }) => {
   const handleClickOnFirst = () => {
     setPageNum(1);
   };
+
   const handleClickOnPrev = () => {
     if (pageNum > 1) setPageNum((num) => num - 1);
   };
@@ -12,6 +13,7 @@ const PaginationBar = ({ pageNum, setPageNum, totalPageNum }) => {
   const handleClickOnLast = () => {
     setPageNum(totalPageNum);
   };
+
   const handleClickOnNext = () => {
     if (pageNum < totalPageNum) setPageNum((num) => num + 1);
   };
@@ -19,6 +21,7 @@ const PaginationBar = ({ pageNum, setPageNum, totalPageNum }) => {
   const handleClickOnPage = (page) => {
     setPageNum(page);
   };
+
   return (
     <Pagination className='mt-3 justify-content-center'>
       <Pagination.First disabled={pageNum === 1} onClick={handleClickOnFirst} />
