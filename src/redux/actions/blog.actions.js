@@ -54,10 +54,38 @@ const submitReaction = (targetType, targetId, emoji) => async (dispatch) => {
   }
 };
 
+const submitReview = (submittedReview, blogId) => async (dispatch) => {
+  dispatch({ type: types.BLOG_REVIEW_REQUEST });
+
+  try {
+    let url = `/reviews/blogs/${blogId}`;
+    const response = await api.post(url, {
+      content: submittedReview,
+    });
+
+    if (response.data.success) {
+      dispatch({
+        type: types.BLOG_REVIEW_SUCCESS,
+        payload: response.data.data,
+      });
+    }
+
+    if (response.errors) {
+      dispatch({
+        type: types.BLOG_REVIEW_FAILURE,
+        payload: response.errors,
+      });
+    }
+  } catch (error) {
+    dispatch({ type: types.BLOG_REVIEW_FAILURE, payload: error });
+  }
+};
+
 const blogActions = {
   getBlogs,
   getBlog,
   submitReaction,
+  submitReview,
 };
 
 export default blogActions;

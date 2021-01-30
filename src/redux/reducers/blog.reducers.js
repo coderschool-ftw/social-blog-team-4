@@ -45,6 +45,20 @@ const blogReducer = (state = initialState, action) => {
       return { ...state };
     // TODO
 
+    case types.BLOG_REVIEW_REQUEST:
+      return { ...state };
+    // TODO
+
+    case types.BLOG_REVIEW_SUCCESS:
+      return {
+        ...state,
+        blog: { ...state.blog, reviews: [...state.blog.reviews, payload] },
+      };
+
+    case types.BLOG_REVIEW_FAILURE:
+      return { ...state };
+    // TODO
+
     default:
       return state;
   }
