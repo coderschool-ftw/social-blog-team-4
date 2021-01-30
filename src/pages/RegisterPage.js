@@ -24,13 +24,19 @@ const RegisterPage = () => {
 
   return (
     <div
-      className='d-flex justify-content-center align-items-center text-center'
+      className='RegisterPage d-flex justify-content-center align-items-center text-center'
       style={{ minHeight: '90vh' }}
     >
-      <div>
+      <div
+        className='border border-primary px-3 py-5 d-flex flex-column justify-content-center align-items-center'
+        style={{ width: '400px', borderRadius: '1rem' }}
+      >
         <h1 className='text-primary'>Register</h1>
         {error && <h2>{error}</h2>}
-        <Form style={{ width: '330px' }} onSubmit={handleSubmit}>
+        <Form
+          style={{ width: '100%', maxWidth: '330px' }}
+          onSubmit={handleSubmit}
+        >
           <Form.Group controlId='formBasicName'>
             <Form.Control
               type='text'
@@ -71,9 +77,9 @@ const RegisterPage = () => {
             Register
           </Button>
         </Form>
-        <p>
+        <div>
           Already have an account? <Link to='/login'>Log In</Link>
-        </p>
+        </div>
       </div>
     </div>
   );

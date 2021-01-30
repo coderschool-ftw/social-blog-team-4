@@ -77,3 +77,15 @@
 .Reactions > div:last-of-type > div > div {
   width: 64px !important;
 }
+
+@media (max-width: 575.98px) {
+  .RegisterPage,
+  .LoginPage {
+    min-height: 70vh !important;
+  }
+
+  .RegisterPage > div,
+  .LoginPage > div {
+    border: 0px !important;
+  }
+}

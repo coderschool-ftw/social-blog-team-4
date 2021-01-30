@@ -23,12 +23,18 @@ const Login = () => {
 
   return (
     <div
-      className='d-flex justify-content-center align-items-center text-center'
+      className='LoginPage d-flex justify-content-center align-items-center text-center'
       style={{ minHeight: '90vh' }}
     >
-      <div>
+      <div
+        className='border border-primary px-3 py-5 d-flex flex-column justify-content-center align-items-center'
+        style={{ width: '400px', borderRadius: '1rem' }}
+      >
         <h1 className='text-primary'>Sign In</h1>
-        <Form style={{ width: '330px' }} onSubmit={handleFormSubmit}>
+        <Form
+          style={{ width: '100%', maxWidth: '330px' }}
+          onSubmit={handleFormSubmit}
+        >
           <Form.Group controlId='formBasicEmail'>
             <Form.Control
               type='email'
