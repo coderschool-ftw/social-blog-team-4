@@ -41,7 +41,11 @@ const Reactions = ({ blog, dispatch, id }) => {
         />
       ) : (
         <div
-          style={{ marginTop: '-4px', marginLeft: '8px' }}
+          style={{
+            marginLeft: '8px',
+            height: '40px',
+            display: 'flex',
+          }}
           onClick={toggleReactionsSelector}
         >
           <div className='LikeButton d-flex flex-column justify-items-center justify-content-center'>

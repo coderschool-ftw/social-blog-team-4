@@ -71,6 +71,7 @@
 
 .Reactions > div:first-of-type > div.LikeButton {
   width: 16px !important;
+  margin-top: 0px !important;
 }
 
 .Reactions > div:last-of-type > div > div {
