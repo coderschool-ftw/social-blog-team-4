@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Container, Form, Col, Button } from 'react-bootstrap';
+import React, { useEffect } from 'react';
+import { Container } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Moment from 'react-moment';
 import blogActions from '../redux/actions/blog.actions';
 import Reactions from '../components/Reactions';
+import AddReviewForm from '../components/AddReviewForm';
 
 const BlogDetailPage = () => {
   const { id } = useParams();
@@ -16,18 +17,10 @@ const BlogDetailPage = () => {
   }
   const loading = useSelector((state) => state.blog.loading);
 
-  const [review, setReview] = useState('');
-
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(blogActions.getBlog(id));
   }, [dispatch, id]);
-
-  const handleReviewSubmit = (e, submittedReview, blogId) => {
-    e.preventDefault();
-    setReview('');
-    dispatch(blogActions.submitReview(submittedReview, blogId));
-  };
 
   return (
     <Container className='BlogDetailPage'>
@@ -48,29 +41,7 @@ const BlogDetailPage = () => {
 
               <Reactions blog={blog} dispatch={dispatch} id={id} />
 
-              <Form
-                onSubmit={(e) => {
-                  console.log('Hello');
-                  handleReviewSubmit(e, review, id);
-                }}
-              >
-                <Form.Row className='align-items-center'>
-                  <Col sm={9} className='my-1'>
-                    <Form.Label htmlFor='inlineFormInputReview' srOnly>
-                      Review
-                    </Form.Label>
-                    <Form.Control
-                      type='text'
-                      placeholder='Wanna say something?'
-                      value={review}
-                      onChange={(e) => setReview(e.target.value)}
-                    />
-                  </Col>
-                  <Col xs='auto' className='my-1'>
-                    <Button type='submit'>Review</Button>
-                  </Col>
-                </Form.Row>
-              </Form>
+              <AddReviewForm blogId={id} />
 
               <ul>
                 {reviews.map((r) => (
