@@ -30,6 +30,7 @@ const HomePage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setQuery(searchInput);
+    setPageNum(1);
     setSearchInput('');
   };
 

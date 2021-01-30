@@ -5,11 +5,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import Moment from 'react-moment';
 import blogActions from '../redux/actions/blog.actions';
 import Reactions from '../components/Reactions';
+import AddReviewForm from '../components/AddReviewForm';
 
 const BlogDetailPage = () => {
   const { id } = useParams();
 
   const blog = useSelector((state) => state.blog.blog);
+  let reviews;
+  if (blog && blog.reviews) {
+    reviews = blog.reviews.slice().reverse();
+  }
   const loading = useSelector((state) => state.blog.loading);
 
   const dispatch = useDispatch();
@@ -35,6 +40,21 @@ const BlogDetailPage = () => {
               </div>
 
               <Reactions blog={blog} dispatch={dispatch} id={id} />
+
+              <AddReviewForm blogId={id} />
+
+              <ul>
+                {reviews.map((r) => (
+                  <li key={r._id}>
+                    <strong>{r.user.name}</strong>
+                    <span> says </span>
+                    <strong>{r.content}</strong>
+                    <span>
+                      , <Moment fromNow>{r.createdAt}</Moment>
+                    </span>
+                  </li>
+                ))}
+              </ul>
             </>
           )}
         </>
