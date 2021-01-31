@@ -171,7 +171,9 @@ const FriendTable = ({
           ))
         ) : (
           <tr>
-            <td colSpan='5'>No result</td>
+            <td className="text-center" colSpan="5">
+              No result
+            </td>
           </tr>
         )}
       </tbody>

@@ -6,6 +6,7 @@ import Moment from "react-moment";
 import blogActions from "../redux/actions/blog.actions";
 import Reactions from "../components/Reactions";
 import AddReviewForm from "../components/AddReviewForm";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const BlogDetailPage = () => {
   const { id } = useParams();
@@ -37,7 +38,7 @@ const BlogDetailPage = () => {
           {error && <h1 className="text-center mt-5">{error}</h1>}
 
           {loading ? (
-            <div>Loading blog detail</div>
+            <LoadingSpinner />
           ) : (
             <>
               {blog && (

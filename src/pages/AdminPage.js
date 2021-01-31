@@ -4,7 +4,8 @@ import MenuAdmin from "../components/MenuAdmin";
 import { Row, Col, Button, Form } from "react-bootstrap";
 import { getCurrentUser } from "../redux/actions/auth.actions";
 import { updateProfile } from "../redux/actions/auth.actions";
-import { ClipLoader } from "react-spinners";
+import LoadingSpinner from "../components/LoadingSpinner";
+
 const AdminPage = () => {
   const [show, setShow] = useState(false);
   const [name, setName] = useState("");
@@ -32,9 +33,7 @@ const AdminPage = () => {
             </Button>
           </Row>
           {loading ? (
-            <div className='text-center'>
-              <ClipLoader color='#f86c6b' size={150} loading={true} />
-            </div>
+            <LoadingSpinner />
           ) : (
             user && (
               <Row className='mt-5 justify-content-center'>

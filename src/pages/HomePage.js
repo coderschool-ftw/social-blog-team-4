@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, Row, Col } from 'react-bootstrap';
-import { ClipLoader } from 'react-spinners';
 import JumbotronBlog from '../components/JumbotronBlog';
 import PaginationBar from '../components/PaginationBar';
 import blogActions from '../redux/actions/blog.actions';
 import SearchForm from '../components/SearchForm';
 import BlogCard from '../components/BlogCard';
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const HomePage = () => {
   const [pageNum, setPageNum] = useState(1);
@@ -52,9 +52,7 @@ const HomePage = () => {
           {error && <h1 className="text-center mt-5">{error}</h1>}
 
           {loading ? (
-            <div className='text-center mt-5'>
-              <ClipLoader color='#f86c6b' size={150} loading={true} />
-            </div>
+            <LoadingSpinner text="blogs" />
           ) : (
             <ul className='list-unstyled d-flex flex-wrap justify-content-between'>
               {blogs.map((b) => (
