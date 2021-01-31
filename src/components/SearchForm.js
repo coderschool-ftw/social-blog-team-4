@@ -1,14 +1,9 @@
-import React from "react";
-import { Button, Col, Form } from "react-bootstrap";
+import React from 'react';
+import { Button, Col, Form } from 'react-bootstrap';
 
-const SearchForm = ({
-  loading,
-  searchInput,
-  handleSearchChange,
-  handleSubmit,
-}) => {
+const SearchForm = ({ searchInput, handleSearchChange, handleSubmit }) => {
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit} className="my-3">
       <Form.Row>
         <Col>
           <Form.Control
@@ -17,18 +12,7 @@ const SearchForm = ({
             onChange={handleSearchChange}
           />
         </Col>
-        {loading ? (
-          <Button disabled>
-            <span
-              className="spinner-border spinner-border-sm"
-              role="status"
-              aria-hidden="true"
-            ></span>
-            Searching..
-          </Button>
-        ) : (
-          <Button type="submit">Search</Button>
-        )}
+        <Button type="submit">Search</Button>
       </Form.Row>
     </Form>
   );

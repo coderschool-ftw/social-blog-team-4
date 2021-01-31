@@ -32,7 +32,6 @@ const HomePage = () => {
     e.preventDefault();
     setQuery(searchInput);
     setPageNum(1);
-    setSearchInput('');
   };
 
   const shouldShowPagination = blogs.length > 0 && totalPages > 1 && !loading;
@@ -61,6 +60,13 @@ const HomePage = () => {
               {blogs.map((b) => (
                 <BlogCard key={b._id} blog={b} />
               ))}
+              {blogs.length === 0 && query !== '' && (
+                <h1 className="text-center font-weight-normal">
+                  Your search -
+                  <span className="font-weight-bold">{` ${query} `}</span>
+                  did not match any blogs.
+                </h1>
+              )}
             </ul>
           )}
         </Col>
