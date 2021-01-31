@@ -2,8 +2,7 @@
 
 Created with love by: `Chau, Tia, Thang`
 
-<!-- View online at: `Your URL here` -->
-<!-- TODO: 🎉 Public online to CodePen/Repl.it/CodeSandbox/Netlify then update the link here -->
+View online at: [`https://social-blog-team-4.netlify.app/`](https://social-blog-team-4.netlify.app/)
 
 **Summary**: This is the frontend for a social blog - built with React.
 
