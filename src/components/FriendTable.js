@@ -83,6 +83,7 @@ const FriendTable = ({
                   onError={addDefaultSrc}
                   roundedCircle
                   width='50px'
+                  height='50px'
                 />
               </td>
               <td>{f.name}</td>
