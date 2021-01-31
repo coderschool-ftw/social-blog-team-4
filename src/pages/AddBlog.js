@@ -6,11 +6,12 @@ const BACKEND_API = process.env.REACT_APP_BACKEND_API;
 const AddBlog = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [images, setImages] = useState([]);
   const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const blog = { title, content };
+    const blog = { title, content, images };
     // async (dispatch) => {
     //   dispatch({ type: types.LOGIN_STARTED });
     //   try {
@@ -18,7 +19,7 @@ const AddBlog = () => {
     //       email,
     //       password,
     //     });
-    // console.log(blog);
+    console.log(blog);
     fetch(`${BACKEND_API}/blogs`, {
       method: "POST",
       headers: {
@@ -27,7 +28,7 @@ const AddBlog = () => {
       },
       body: JSON.stringify(blog),
     }).then(() => {
-      console.log("new blog added");
+      // console.log("new blog added");
       history.push("/");
     });
   };
@@ -48,6 +49,13 @@ const AddBlog = () => {
           onChange={(e) => setContent(e.target.value)}
           required
         ></textarea>
+        <label>Image Link:</label>
+        <input
+          type="text"
+          value={images}
+          onChange={(e) => setImages(e.target.value)}
+          onSubmit={(e) => setImages(images.push(e.target.value))}
+        ></input>
       </form>
       <button onClick={handleSubmit}>Add blog</button>
     </div>
