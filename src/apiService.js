@@ -29,6 +29,7 @@ api.interceptors.response.use(
     console.log('Response:', response);
     if (response.data && response.data.data && response.data.data.accessToken) {
       localStorage.setItem('token', response.data.data.accessToken);
+      localStorage.setItem("_id", response.data.data.user._id);
     }
     return response;
   },
