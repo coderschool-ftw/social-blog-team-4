@@ -94,3 +94,7 @@
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+.Reviews li:last-of-type {
+  margin-bottom: 0px !important;
+}

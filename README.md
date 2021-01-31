@@ -2,8 +2,7 @@
 
 Created with love by: `Chau, Tia, Thang`
 
-<!-- View online at: `Your URL here` -->
-<!-- TODO: 🎉 Public online to CodePen/Repl.it/CodeSandbox/Netlify then update the link here -->
+View online at: [`https://social-blog-team-4.netlify.app/`](https://social-blog-team-4.netlify.app/)
 
 **Summary**: This is the frontend for a social blog - built with React.
 
@@ -23,16 +22,16 @@ To create a GIF, use [LiceCap](http://www.cockos.com/licecap/), [RecordIt](http:
 - [x] User can see all the blog posts on the homepage, order by created time
 - [x] User can register to have an account
 - [x] User can log in with username and password
-- [ ] After login user can write blog posts, edit and delete his/her own blog posts
-- [ ] After login user can write reviews for blog posts
-- [ ] Before submitting data to the server, the data should be validated
+- [x] After login user can write blog posts, edit and delete his/her own blog posts
+- [x] After login user can write reviews for blog posts
+- [x] Before submitting data to the server, the data should be validated
 - [x] User stays logged in after refreshing browser.
 
 ### The following **optional** features are implemented:
 
 - [x] 🚀 After login, user can react (laugh, like, sad, love, angry) to blog posts
-- [ ] 🚀 Pagination for blogs, reviews
-- [ ] 🚀 Searching and sorting of blogs
+- [x] 🚀 Pagination for blogs, ~~reviews~~
+- [x] 🚀 Searching and sorting of blogs
 - [x] 🚀 User can send friend request to another user
 - [x] 🚀 User can accept/decline a friend request
 - [x] 🚀 User can see list of his/her friends
