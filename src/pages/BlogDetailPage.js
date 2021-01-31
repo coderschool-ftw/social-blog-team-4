@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Row, Col, Image } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Moment from "react-moment";
@@ -24,48 +24,102 @@ const BlogDetailPage = () => {
     dispatch(blogActions.getBlog(id));
   }, [dispatch, id]);
 
+  const userAvatarSrc = blog?.author?.avatarUrl
+    ? blog?.author?.avatarUrl
+    : `https://ui-avatars.com/api/?name=${blog?.author?.name}&background=random&length=1&bold=true`;
+
+  const blogImageSrc = blog?.images?.length > 0 && blog.images[0];
+
   return (
-    <Container className='BlogDetailPage'>
-      {loading ? (
-        <div>Loading blog detail</div>
-      ) : (
-        <>
-          {blog && (
+    <Container className="BlogDetailPage">
+      <Row>
+        <Col lg={{ span: 6, offset: 3 }}>
+          {error && <h1 className="text-center mt-5">{error}</h1>}
+
+          {loading ? (
+            <div>Loading blog detail</div>
+          ) : (
             <>
-              <div className='Blog-detail'>
-                <div>{blog.title}</div>
-                <div>
-                  @{blog.author.name + " "}
-                  <Moment fromNow>{blog.author.createdAt}</Moment>
+              {blog && (
+                <div className="Blog-detail-wrapper border rounded px-3 pt-3 mb-3">
+                  <div className="Blog-detail">
+                    <div className="d-flex mb-3">
+                      <div className="mr-2">
+                        <Image
+                          src={userAvatarSrc}
+                          alt=""
+                          width="50px"
+                          height="50px"
+                          roundedCircle
+                        />
+                      </div>
+                      <div>
+                        <div className="font-weight-bold">
+                          {blog.author.name}
+                        </div>
+                        <div style={{ color: "rgb(91, 112, 131)" }}>
+                          {blog.author.email}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="mb-3">
+                      <h3>{blog.title}</h3>
+                      <div className="mb-3" style={{ fontSize: "20px" }}>
+                        {blog.content}
+                      </div>
+                      {blogImageSrc && (
+                        <Image fluid src={blogImageSrc} alt="" />
+                      )}
+                    </div>
+                    <div className="pb-1 border-bottom">
+                      <Moment
+                        style={{ color: "rgb(91, 112, 131)", fontSize: "13px" }}
+                        fromNow
+                      >
+                        {blog.author.createdAt}
+                      </Moment>
+                    </div>
+                    <Reactions
+                      blog={blog}
+                      dispatch={dispatch}
+                      id={id}
+                      isAuthenticated={isAuthenticated}
+                    />
+                  </div>
+
+                  <div
+                    className={`${
+                      isAuthenticated || reviews.length > 0
+                        ? "border-top pb-3"
+                        : ""
+                    } px-3`}
+                    style={{
+                      marginLeft: "-1rem",
+                      marginRight: "-1rem",
+                    }}
+                  >
+                    {isAuthenticated && <AddReviewForm blogId={id} />}
+                    {reviews.length > 0 && (
+                      <ul className="list-unstyled pt-3 mb-0 mt-3 border-top">
+                        {reviews.map((r) => (
+                          <li key={r._id}>
+                            <strong>{r.user.name}</strong>
+                            <span> says </span>
+                            <strong>{r.content}</strong>
+                            <span>
+                              , <Moment fromNow>{r.createdAt}</Moment>
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
                 </div>
-                <div>{blog.content}</div>
-              </div>
-
-              <Reactions
-                blog={blog}
-                dispatch={dispatch}
-                id={id}
-                isAuthenticated={isAuthenticated}
-              />
-
-              {isAuthenticated && <AddReviewForm blogId={id} />}
-
-              <ul>
-                {reviews.map((r) => (
-                  <li key={r._id}>
-                    <strong>{r.user.name}</strong>
-                    <span> says </span>
-                    <strong>{r.content}</strong>
-                    <span>
-                      , <Moment fromNow>{r.createdAt}</Moment>
-                    </span>
-                  </li>
-                ))}
-              </ul>
+              )}
             </>
           )}
-        </>
-      )}
+        </Col>
+      </Row>
     </Container>
   );
 };
