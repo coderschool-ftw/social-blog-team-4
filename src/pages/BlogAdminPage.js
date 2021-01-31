@@ -56,6 +56,7 @@ const BlogAdminPage = () => {
     } else {
       setOrder(1);
     }
+    setPageNum(1);
   };
 
   const shouldShowPagination = blogs.length > 0 && totalPages > 1 && !loading;

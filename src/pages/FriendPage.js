@@ -68,6 +68,7 @@ const FriendPage = () => {
     } else {
       setOrder(1);
     }
+    setPageNum(1);
   };
 
   const shouldShowPagination = friends.length > 0 && totalPages > 1 && !loading;
