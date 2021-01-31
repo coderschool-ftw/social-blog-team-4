@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, Row, Col } from 'react-bootstrap';
-import { ClipLoader } from 'react-spinners';
 import JumbotronBlog from '../components/JumbotronBlog';
 import PaginationBar from '../components/PaginationBar';
 import blogActions from '../redux/actions/blog.actions';
 import SearchForm from '../components/SearchForm';
 import BlogCard from '../components/BlogCard';
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const HomePage = () => {
   const [pageNum, setPageNum] = useState(1);
   const limit = 10;
   const blogs = useSelector((state) => state.blog.blogs);
   const loading = useSelector((state) => state.blog.loading);
+  const error = useSelector((state) => state.blog.error);
   const totalPages = useSelector((state) => state.blog.totalPages);
 
   const [searchInput, setSearchInput] = useState('');
@@ -31,7 +32,6 @@ const HomePage = () => {
     e.preventDefault();
     setQuery(searchInput);
     setPageNum(1);
-    setSearchInput('');
   };
 
   const shouldShowPagination = blogs.length > 0 && totalPages > 1 && !loading;
@@ -49,15 +49,22 @@ const HomePage = () => {
             handleSubmit={handleSubmit}
           />
 
+          {error && <h1 className="text-center mt-5">{error}</h1>}
+
           {loading ? (
-            <div className='text-center mt-5'>
-              <ClipLoader color='#f86c6b' size={150} loading={true} />
-            </div>
+            <LoadingSpinner text="blogs" />
           ) : (
             <ul className='list-unstyled d-flex flex-wrap justify-content-between'>
               {blogs.map((b) => (
                 <BlogCard key={b._id} blog={b} />
               ))}
+              {blogs.length === 0 && query !== '' && (
+                <h1 className="text-center font-weight-normal">
+                  Your search -
+                  <span className="font-weight-bold">{` ${query} `}</span>
+                  did not match any blogs.
+                </h1>
+              )}
             </ul>
           )}
         </Col>

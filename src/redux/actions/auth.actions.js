@@ -10,6 +10,12 @@ export const login = (email, password) => async (dispatch) => {
     });
     if (response.data.success) {
       dispatch({ type: types.LOGIN_SUCCESS, payload: response.data.data.user });
+
+      const userAvatarSrc = response.data.data.user?.avatarUrl
+        ? response.data.data.user.avatarUrl
+        : `https://ui-avatars.com/api/?name=${response.data.data.user.name}&background=random&length=1&bold=true`;
+
+      localStorage.setItem("userAvatarSrc", userAvatarSrc);
     }
   } catch (error) {
     dispatch({ type: types.LOGIN_FAIL, payload: error.message });
@@ -19,6 +25,7 @@ export const login = (email, password) => async (dispatch) => {
 export const logout = () => (dispatch) => {
   localStorage.removeItem("token");
   localStorage.removeItem("_id");
+  localStorage.removeItem("userAvatarSrc");
   dispatch({ type: types.LOGOUT });
 };
 

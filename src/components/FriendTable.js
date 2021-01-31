@@ -1,5 +1,6 @@
 import React from "react";
 import { Table, Button, Badge, Image } from "react-bootstrap";
+
 const FriendTable = ({
   currentTab,
   friends,
@@ -10,10 +11,15 @@ const FriendTable = ({
   handleSendFriendRequest,
   handleSort,
 }) => {
-  const addDefaultSrc = (e) => {
-    e.target.src =
-      "https://cdn.itviec.com/employers/coderschool/logo/social/8p67H9qvrjNV5FNxB5ZEuPoM/Logo-full@2x-1024x800.png";
+  const friendAvatar = (friend) => {
+    if (friend.avatarUrl) return friend.avatarUrl;
+    return "/default-avatar.png";
   };
+
+  const replaceWithFallbackAvatar = (e) => {
+    e.target.src = "/default-avatar.png";
+  };
+
   return (
     <Table striped bordered hover>
       <thead>
@@ -79,8 +85,8 @@ const FriendTable = ({
             <tr key={f._id}>
               <td>
                 <Image
-                  src={f.avatarUrl}
-                  onError={addDefaultSrc}
+                  src={friendAvatar(f)}
+                  onError={(e) => replaceWithFallbackAvatar(e)}
                   roundedCircle
                   width='50px'
                   height='50px'
@@ -172,7 +178,9 @@ const FriendTable = ({
           ))
         ) : (
           <tr>
-            <td colSpan='5'>No result</td>
+            <td className="text-center" colSpan="5">
+              No result
+            </td>
           </tr>
         )}
       </tbody>

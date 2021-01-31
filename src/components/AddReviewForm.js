@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Form, Col, Button } from 'react-bootstrap';
+import { Form, Button, Image } from 'react-bootstrap';
 
 import blogActions from '../redux/actions/blog.actions';
 
@@ -15,29 +15,40 @@ const AddReviewForm = ({ blogId }) => {
     dispatch(blogActions.submitReview(submittedReview, blogId));
   };
 
+  const currentUserAvatarSrc = localStorage.getItem('userAvatarSrc');
+
   return (
     <Form
       onSubmit={(e) => {
-        console.log('Hello');
         handleReviewSubmit(e, review, blogId);
       }}
+      className="mt-3"
     >
-      <Form.Row className='align-items-center'>
-        <Col sm={9} className='my-1'>
-          <Form.Label htmlFor='inlineFormInputReview' srOnly>
+      <div className="d-flex align-items-center justify-content-between">
+        <div>
+          <Image
+            src={currentUserAvatarSrc}
+            alt=""
+            width="50px"
+            height="50px"
+            roundedCircle
+          />
+        </div>
+        <div className="flex-grow-1 mx-3">
+          <Form.Label htmlFor="inlineFormInputReview" srOnly>
             Review
           </Form.Label>
           <Form.Control
-            type='text'
-            placeholder='Wanna say something?'
+            type="text"
+            placeholder="Write a comment ..."
             value={review}
             onChange={(e) => setReview(e.target.value)}
           />
-        </Col>
-        <Col xs='auto' className='my-1'>
-          <Button type='submit'>Review</Button>
-        </Col>
-      </Form.Row>
+        </div>
+        <div>
+          <Button type="submit">Post</Button>
+        </div>
+      </div>
     </Form>
   );
 };

@@ -6,8 +6,8 @@ import friendActions from "../redux/actions/friend.actions";
 import PaginationBar from "../components/PaginationBar";
 import FriendTabs from "../components/FriendTabs";
 import FriendTable from "../components/FriendTable";
-import { ClipLoader } from "react-spinners";
 import FormSearch from "../components/FormSearch";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const FriendPage = () => {
   const [pageNum, setPageNum] = useState(1);
@@ -21,6 +21,7 @@ const FriendPage = () => {
   const totalPages = useSelector((state) => state.friend.totalPages);
   const loading = useSelector((state) => state.friend.loading);
   const dispatch = useDispatch();
+
   useEffect(() => {
     switch (currentTab) {
       case "friend":
@@ -57,6 +58,7 @@ const FriendPage = () => {
         return;
     }
   }, [dispatch, currentTab, pageNum, limit, searchTerm, sortBy, order]);
+
   const handleSortBy = (e) => {
     const arraySort = e.target.value.split("_");
     console.log("arraySort", arraySort);
@@ -66,7 +68,11 @@ const FriendPage = () => {
     } else {
       setOrder(1);
     }
+    setPageNum(1);
   };
+
+  const shouldShowPagination = friends.length > 0 && totalPages > 1 && !loading;
+
   return (
     <>
       <Row>
@@ -92,9 +98,7 @@ const FriendPage = () => {
           />
 
           {loading ? (
-            <div className='text-center'>
-              <ClipLoader color='#f86c6b' size={150} loading={true} />
-            </div>
+            <LoadingSpinner />
           ) : (
             <FriendTable
               currentTab={currentTab}
@@ -118,11 +122,13 @@ const FriendPage = () => {
             />
           )}
 
-          <PaginationBar
-            pageNum={pageNum}
-            setPageNum={setPageNum}
-            totalPageNum={totalPages}
-          />
+          {shouldShowPagination && (
+            <PaginationBar
+              pageNum={pageNum}
+              setPageNum={setPageNum}
+              totalPageNum={totalPages}
+            />
+          )}
         </Col>
       </Row>
     </>

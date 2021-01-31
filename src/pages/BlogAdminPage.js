@@ -4,11 +4,11 @@ import MenuAdmin from "../components/MenuAdmin";
 import { Row, Col, Table, Button } from "react-bootstrap";
 import FormSearch from "../components/FormSearch";
 import blogActions from "../redux/actions/blog.actions";
-import { ClipLoader } from "react-spinners";
 import Moment from "react-moment";
 import { getCurrentUser } from "../redux/actions/auth.actions";
 import PaginationBar from "../components/PaginationBar";
 import { Link } from "react-router-dom";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const BlogAdminPage = () => {
   const [input, setInput] = useState("");
@@ -24,15 +24,18 @@ const BlogAdminPage = () => {
 
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
+
   useEffect(() => {
     if (user) {
       return;
     }
     dispatch(getCurrentUser());
   }, [dispatch, user]);
+
   useEffect(() => {
     dispatch(blogActions.getBlogs(pageNum, limit, query, sortBy, order));
   }, [dispatch, pageNum, limit, query, sortBy, order]);
+
   const handleCheckBox = (e) => {
     if (e.target.checked) {
       if (user._id) {
@@ -44,6 +47,7 @@ const BlogAdminPage = () => {
       dispatch(blogActions.getBlogs(pageNum, limit, query));
     }
   };
+
   const handleSortBy = (e) => {
     const arraySort = e.target.value.split("_");
     setSortBy(arraySort[0]);
@@ -52,7 +56,11 @@ const BlogAdminPage = () => {
     } else {
       setOrder(1);
     }
+    setPageNum(1);
   };
+
+  const shouldShowPagination = blogs.length > 0 && totalPages > 1 && !loading;
+
   return (
     <>
       <Row>
@@ -69,20 +77,18 @@ const BlogAdminPage = () => {
               setQuery(input);
             }}
           />
-          <div className='form-check'>
+          <div className="form-check">
             <input
-              className='form-check-input'
-              type='checkbox'
-              id='flexCheckDefault'
+              className="form-check-input"
+              type="checkbox"
+              id="flexCheckDefault"
               defaultChecked={false}
               onChange={handleCheckBox}
             />
-            <label className='form-check-label'>My Blogs Only</label>
+            <label className="form-check-label">My Blogs Only</label>
           </div>
           {loading ? (
-            <div className='text-center mt-5'>
-              <ClipLoader color='#f86c6b' size={150} loading={true} />
-            </div>
+            <LoadingSpinner />
           ) : (
             <Table striped bordered hover>
               <thead>
@@ -90,40 +96,40 @@ const BlogAdminPage = () => {
                   <th>
                     Title{" "}
                     <button
-                      className='m-2 link-button'
-                      value='title_ASC'
+                      className="m-2 link-button"
+                      value="title_ASC"
                       onClick={handleSortBy}
                     >
                       ⬆️
                     </button>
                     <button
-                      className='link-button'
-                      value='title_DESC'
+                      className="link-button"
+                      value="title_DESC"
                       onClick={handleSortBy}
                     >
                       ⬇️
                     </button>
                   </th>
-                  <th className='pb-4'>Author</th>
+                  <th className="pb-4">Author</th>
                   <th>
                     Review Count{" "}
                     <button
-                      className='m-2 link-button'
-                      value='reviewCount_ASC'
+                      className="m-2 link-button"
+                      value="reviewCount_ASC"
                       onClick={handleSortBy}
                     >
                       ⬆️
                     </button>
                     <button
-                      className='link-button'
-                      value='reviewCount_DESC'
+                      className="link-button"
+                      value="reviewCount_DESC"
                       onClick={handleSortBy}
                     >
                       ⬇️
                     </button>
                   </th>
-                  <th className='pb-4'>Created At</th>
-                  <th className='pb-4'>Actions</th>
+                  <th className="pb-4">Created At</th>
+                  <th className="pb-4">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -143,13 +149,13 @@ const BlogAdminPage = () => {
                       {showAction && (
                         <>
                           <Link to={`/blog/edit/${b._id}`}>
-                            <Button variant='primary' className='mr-2'>
+                            <Button variant="primary" className="mr-2">
                               Edit
                             </Button>
                           </Link>
 
                           <Button
-                            variant='danger'
+                            variant="danger"
                             value={b._id}
                             onClick={(e) =>
                               dispatch(blogActions.deleteBlog(e.target.value))
@@ -165,11 +171,14 @@ const BlogAdminPage = () => {
               </tbody>
             </Table>
           )}
-          <PaginationBar
-            pageNum={pageNum}
-            setPageNum={setPageNum}
-            totalPageNum={totalPages}
-          />
+
+          {shouldShowPagination && (
+            <PaginationBar
+              pageNum={pageNum}
+              setPageNum={setPageNum}
+              totalPageNum={totalPages}
+            />
+          )}
         </Col>
       </Row>
     </>
