@@ -33,6 +33,12 @@ const BlogDetailPage = () => {
   const userAvatarSrc = blog?.author?.avatarUrl
     ? blog?.author?.avatarUrl
     : `https://ui-avatars.com/api/?name=${blog?.author?.name}&background=random&length=1&bold=true`;
+
+  const reviewUserAvatarSrc = (review) =>
+    review?.user?.avatarUrl
+      ? review?.user?.avatarUrl
+      : `https://ui-avatars.com/api/?name=${review?.user?.name}&background=random&length=1&bold=true`;
+
   const handleDelete = () => {
     fetch(`${BACKEND_API}/blogs/` + blog._id, {
       method: "DELETE",
@@ -139,13 +145,47 @@ const BlogDetailPage = () => {
                     {reviews.length > 0 && (
                       <ul className="list-unstyled pt-3 mb-0 mt-3 border-top">
                         {reviews.map((r) => (
-                          <li key={r._id}>
-                            <strong>{r.user.name}</strong>
-                            <span> says </span>
-                            <strong>{r.content}</strong>
-                            <span>
-                              , <Moment fromNow>{r.createdAt}</Moment>
-                            </span>
+                          <li key={r._id} className="mb-4">
+                            <div className="d-flex">
+                              <div className="mr-2">
+                                <Image
+                                  src={reviewUserAvatarSrc(r)}
+                                  alt=""
+                                  width="40px"
+                                  height="40px"
+                                  roundedCircle
+                                />
+                              </div>
+                              <div className="d-flex flex-column">
+                                <div
+                                  className="border p-2"
+                                  style={{
+                                    backgroundColor: "#eff1f3",
+                                    padding: "10px 15px !important",
+                                    borderRadius: "13px",
+                                    width: "fit-content",
+                                  }}
+                                >
+                                  <div className="d-flex ">
+                                    <div className="font-weight-bold mr-1">
+                                      {r.user.name}
+                                    </div>
+                                  </div>
+                                  <div>{r.content}</div>
+                                </div>
+                                <div>
+                                  <Moment
+                                    style={{
+                                      color: "rgb(91, 112, 131)",
+                                      fontSize: "13px",
+                                    }}
+                                    fromNow
+                                  >
+                                    {r.createdAt}
+                                  </Moment>
+                                </div>
+                              </div>
+                            </div>
                           </li>
                         ))}
                       </ul>
