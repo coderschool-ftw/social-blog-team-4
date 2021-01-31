@@ -8,7 +8,7 @@ const SearchForm = ({
   handleSubmit,
 }) => {
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form className="mb-4" onSubmit={handleSubmit}>
       <Form.Row>
         <Col>
           <Form.Control
