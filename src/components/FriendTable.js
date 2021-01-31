@@ -10,6 +10,10 @@ const FriendTable = ({
   handleSendFriendRequest,
   handleSort,
 }) => {
+  const addDefaultSrc = (e) => {
+    e.target.src =
+      "https://cdn.itviec.com/employers/coderschool/logo/social/8p67H9qvrjNV5FNxB5ZEuPoM/Logo-full@2x-1024x800.png";
+  };
   return (
     <Table striped bordered hover>
       <thead>
@@ -71,10 +75,15 @@ const FriendTable = ({
       </thead>
       <tbody>
         {friends.length > 0 ? (
-          friends.map((f, index) => (
+          friends.map((f) => (
             <tr key={f._id}>
               <td>
-                <Image src={f.avatarUrl} roundedCircle width='50px' />
+                <Image
+                  src={f.avatarUrl}
+                  onError={addDefaultSrc}
+                  roundedCircle
+                  width='50px'
+                />
               </td>
               <td>{f.name}</td>
               <td>{f.email}</td>
