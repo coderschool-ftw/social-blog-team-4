@@ -15,7 +15,7 @@ export const login = (email, password) => async (dispatch) => {
         ? response.data.data.user.avatarUrl
         : `https://ui-avatars.com/api/?name=${response.data.data.user.name}&background=random&length=1&bold=true`;
 
-      localStorage.setItem('userAvatarSrc', userAvatarSrc);
+      localStorage.setItem("userAvatarSrc", userAvatarSrc);
     }
   } catch (error) {
     dispatch({ type: types.LOGIN_FAIL, payload: error.message });
@@ -24,8 +24,8 @@ export const login = (email, password) => async (dispatch) => {
 
 export const logout = () => (dispatch) => {
   localStorage.removeItem("token");
-  localStorage.removeItem('_id');
-  localStorage.removeItem('userAvatarSrc');
+  localStorage.removeItem("_id");
+  localStorage.removeItem("userAvatarSrc");
   dispatch({ type: types.LOGOUT });
 };
 

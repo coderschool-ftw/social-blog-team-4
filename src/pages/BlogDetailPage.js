@@ -1,17 +1,22 @@
 import React, { useEffect } from "react";
-import { Container, Row, Col, Image } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { Container, Row, Col, Image, Button } from "react-bootstrap";
+import { useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Moment from "react-moment";
 import blogActions from "../redux/actions/blog.actions";
 import Reactions from "../components/Reactions";
 import AddReviewForm from "../components/AddReviewForm";
 import LoadingSpinner from "../components/LoadingSpinner";
+import { useHistory } from "react-router-dom";
 
+const BACKEND_API = process.env.REACT_APP_BACKEND_API;
 const BlogDetailPage = () => {
+  const history = useHistory();
   const { id } = useParams();
+  const currentUser = localStorage.getItem("_id");
 
   const blog = useSelector((state) => state.blog.blog);
+
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   let reviews;
   if (blog && blog.reviews) {
@@ -28,6 +33,17 @@ const BlogDetailPage = () => {
   const userAvatarSrc = blog?.author?.avatarUrl
     ? blog?.author?.avatarUrl
     : `https://ui-avatars.com/api/?name=${blog?.author?.name}&background=random&length=1&bold=true`;
+  const handleDelete = () => {
+    fetch(`${BACKEND_API}/blogs/` + blog._id, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    }).then(() => {
+      history.push("/");
+    });
+  };
 
   const blogImageSrc = blog?.images?.length > 0 && blog.images[0];
 
@@ -61,6 +77,26 @@ const BlogDetailPage = () => {
                         <div style={{ color: "rgb(91, 112, 131)" }}>
                           {blog.author.email}
                         </div>
+                      </div>
+                      <div className="flex-grow-1"></div>
+                      <div>
+                        {/* If current user is also author, show edit button */}
+                        {currentUser === blog?.author?._id ? (
+                          <>
+                            <Link to={`/blog/edit/${blog._id}`}>
+                              <Button variant="primary">Edit</Button>
+                            </Link>
+                            <Button
+                              className="ml-2"
+                              variant="danger"
+                              onClick={handleDelete}
+                            >
+                              Delete
+                            </Button>
+                          </>
+                        ) : (
+                          <></>
+                        )}
                       </div>
                     </div>
                     <div className="mb-3">
