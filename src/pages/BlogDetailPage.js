@@ -119,7 +119,7 @@ const BlogDetailPage = () => {
                         style={{ color: "rgb(91, 112, 131)", fontSize: "13px" }}
                         fromNow
                       >
-                        {blog.author.createdAt}
+                        {blog.createdAt}
                       </Moment>
                     </div>
                     <Reactions
@@ -143,7 +143,7 @@ const BlogDetailPage = () => {
                   >
                     {isAuthenticated && <AddReviewForm blogId={id} />}
                     {reviews.length > 0 && (
-                      <ul className="list-unstyled pt-3 mb-0 mt-3 border-top">
+                      <ul className="Reviews list-unstyled pt-3 mb-0 mt-3 border-top">
                         {reviews.map((r) => (
                           <li key={r._id} className="mb-4">
                             <div className="d-flex">

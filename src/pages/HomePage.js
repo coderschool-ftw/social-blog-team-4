@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Container, Row, Col } from 'react-bootstrap';
-import JumbotronBlog from '../components/JumbotronBlog';
-import PaginationBar from '../components/PaginationBar';
-import blogActions from '../redux/actions/blog.actions';
-import SearchForm from '../components/SearchForm';
-import BlogCard from '../components/BlogCard';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Container, Row, Col } from "react-bootstrap";
+import JumbotronBlog from "../components/JumbotronBlog";
+import PaginationBar from "../components/PaginationBar";
+import blogActions from "../redux/actions/blog.actions";
+import SearchForm from "../components/SearchForm";
+import BlogCard from "../components/BlogCard";
 import LoadingSpinner from "../components/LoadingSpinner";
 
 const HomePage = () => {
@@ -16,8 +16,8 @@ const HomePage = () => {
   const error = useSelector((state) => state.blog.error);
   const totalPages = useSelector((state) => state.blog.totalPages);
 
-  const [searchInput, setSearchInput] = useState('');
-  const [query, setQuery] = useState('');
+  const [searchInput, setSearchInput] = useState("");
+  const [query, setQuery] = useState("");
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -41,7 +41,7 @@ const HomePage = () => {
       {pageNum === 1 && <JumbotronBlog />}
 
       <Row>
-        <Col>
+        <Col lg={{ span: 6, offset: 3 }}>
           <SearchForm
             loading={loading}
             searchInput={searchInput}
@@ -54,11 +54,11 @@ const HomePage = () => {
           {loading ? (
             <LoadingSpinner text="blogs" />
           ) : (
-            <ul className='list-unstyled d-flex flex-wrap justify-content-between'>
+            <ul className="list-unstyled d-flex flex-wrap justify-content-between">
               {blogs.map((b) => (
                 <BlogCard key={b._id} blog={b} />
               ))}
-              {blogs.length === 0 && query !== '' && (
+              {blogs.length === 0 && query !== "" && (
                 <h1 className="text-center font-weight-normal">
                   Your search -
                   <span className="font-weight-bold">{` ${query} `}</span>
