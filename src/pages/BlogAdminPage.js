@@ -104,7 +104,7 @@ const BlogAdminPage = () => {
                       ⬇️
                     </button>
                   </th>
-                  <th>Author</th>
+                  <th className='pb-4'>Author</th>
                   <th>
                     Review Count{" "}
                     <button
@@ -122,8 +122,8 @@ const BlogAdminPage = () => {
                       ⬇️
                     </button>
                   </th>
-                  <th>Created At</th>
-                  <th>Actions</th>
+                  <th className='pb-4'>Created At</th>
+                  <th className='pb-4'>Actions</th>
                 </tr>
               </thead>
               <tbody>

@@ -122,7 +122,10 @@ const updateBlog = (title, content, images, id) => async (dispatch) => {
     });
     console.log("response update");
     if (response.data.success) {
-      // TO DO
+      dispatch({
+        type: types.UPDATE_BLOG_SUCCESS,
+        payload: response.data.message,
+      });
     }
   } catch (error) {
     dispatch({ type: types.UPDATE_BLOG_FAILURE });

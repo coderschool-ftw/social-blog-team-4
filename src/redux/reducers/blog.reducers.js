@@ -4,6 +4,7 @@ const initialState = {
   blog: null,
   totalPages: 1,
   loading: false,
+  successMsg: "",
 };
 
 const blogReducer = (state = initialState, action) => {
@@ -12,6 +13,7 @@ const blogReducer = (state = initialState, action) => {
   switch (type) {
     case types.GET_BLOGS_REQUEST:
     case types.GET_OWNER_BLOGS_REQUEST:
+    case types.UPDATE_BLOG_REQUEST:
       return { ...state, loading: true };
 
     case types.GET_BLOGS_SUCCESS:
@@ -64,6 +66,9 @@ const blogReducer = (state = initialState, action) => {
 
     case types.DELETE_BLOG_SUCCESS:
       return { ...state, blogs: state.blogs.filter((b) => b._id !== payload) };
+
+    case types.UPDATE_BLOG_SUCCESS:
+      return { ...state, successMsg: payload };
 
     default:
       return state;
