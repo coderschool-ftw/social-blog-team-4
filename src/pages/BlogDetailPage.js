@@ -17,6 +17,7 @@ const BlogDetailPage = () => {
     reviews = blog.reviews.slice().reverse();
   }
   const loading = useSelector((state) => state.blog.loading);
+  const error = useSelector((state) => state.blog.error);
 
   const dispatch = useDispatch();
   useEffect(() => {

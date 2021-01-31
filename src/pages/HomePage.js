@@ -13,6 +13,7 @@ const HomePage = () => {
   const limit = 10;
   const blogs = useSelector((state) => state.blog.blogs);
   const loading = useSelector((state) => state.blog.loading);
+  const error = useSelector((state) => state.blog.error);
   const totalPages = useSelector((state) => state.blog.totalPages);
 
   const [searchInput, setSearchInput] = useState('');
@@ -48,6 +49,8 @@ const HomePage = () => {
             handleSearchChange={handleSearchInputChange}
             handleSubmit={handleSubmit}
           />
+
+          {error && <h1 className="text-center mt-5">{error}</h1>}
 
           {loading ? (
             <div className='text-center mt-5'>

@@ -1,4 +1,5 @@
 import * as types from '../constants/blog.constants';
+import * as errors from '../constants/errors.constants';
 import api from '../../apiService';
 
 const getBlogs = (pageNum, limit, query) => async (dispatch) => {
@@ -8,9 +9,19 @@ const getBlogs = (pageNum, limit, query) => async (dispatch) => {
     if (query)
       url += `&title[$regex]=${query}&title[$options]=i&sortBy[title]=1`;
     const response = await api.get(url);
-    dispatch({ type: types.GET_BLOGS_SUCCESS, payload: response.data.data });
+
+    if (response.data.success) {
+      dispatch({ type: types.GET_BLOGS_SUCCESS, payload: response.data.data });
+    }
+
+    if (response.errors) {
+      dispatch({
+        type: types.GET_BLOGS_FAILURE,
+        payload: response.errors,
+      });
+    }
   } catch (error) {
-    dispatch({ type: types.GET_BLOGS_FAILURE, payload: error });
+    dispatch({ type: types.GET_BLOGS_FAILURE, payload: errors.FETCH_ERROR });
   }
 };
 
@@ -21,7 +32,7 @@ const getBlog = (blogId) => async (dispatch) => {
     const response = await api.get(url);
     dispatch({ type: types.GET_BLOG_SUCCESS, payload: response.data.data });
   } catch (error) {
-    dispatch({ type: types.GET_BLOG_FAILURE, payload: error });
+    dispatch({ type: types.GET_BLOG_FAILURE, payload: errors.FETCH_ERROR });
   }
 };
 
@@ -50,7 +61,10 @@ const submitReaction = (targetType, targetId, emoji) => async (dispatch) => {
       });
     }
   } catch (error) {
-    dispatch({ type: types.BLOG_REACTION_FAILURE, payload: error });
+    dispatch({
+      type: types.BLOG_REACTION_FAILURE,
+      payload: errors.FETCH_ERROR,
+    });
   }
 };
 
@@ -77,7 +91,7 @@ const submitReview = (submittedReview, blogId) => async (dispatch) => {
       });
     }
   } catch (error) {
-    dispatch({ type: types.BLOG_REVIEW_FAILURE, payload: error });
+    dispatch({ type: types.BLOG_REVIEW_FAILURE, payload: errors.FETCH_ERROR });
   }
 };
 
