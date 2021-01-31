@@ -1,10 +1,11 @@
-import * as types from '../constants/blog.constants';
+import * as types from "../constants/blog.constants";
 const initialState = {
   blogs: [],
   blog: null,
   totalPages: 1,
   loading: false,
   error: null,
+  successMsg: "",
 };
 
 const blogReducer = (state = initialState, action) => {
@@ -14,8 +15,12 @@ const blogReducer = (state = initialState, action) => {
     /************************ BLOGS ************************/
     case types.GET_BLOGS_REQUEST:
       return { ...state, loading: true, error: null };
+    case types.GET_OWNER_BLOGS_REQUEST:
+    case types.UPDATE_BLOG_REQUEST:
+      return { ...state, loading: true };
 
     case types.GET_BLOGS_SUCCESS:
+    case types.GET_OWNER_BLOGS_SUCCESS:
       return {
         ...state,
         blogs: payload.blogs,
@@ -26,6 +31,8 @@ const blogReducer = (state = initialState, action) => {
 
     case types.GET_BLOGS_FAILURE:
       return { ...state, loading: false, error: payload, blogs: [] };
+    case types.GET_OWNER_BLOGS_FAILURE:
+      return { ...state, loading: false };
 
     /************************ BLOG ************************/
     case types.GET_BLOG_REQUEST:
@@ -63,6 +70,12 @@ const blogReducer = (state = initialState, action) => {
     case types.BLOG_REVIEW_FAILURE:
       return { ...state };
     // TODO
+
+    case types.DELETE_BLOG_SUCCESS:
+      return { ...state, blogs: state.blogs.filter((b) => b._id !== payload) };
+
+    case types.UPDATE_BLOG_SUCCESS:
+      return { ...state, successMsg: payload };
 
     default:
       return state;

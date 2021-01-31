@@ -6,7 +6,6 @@ import friendActions from "../redux/actions/friend.actions";
 import PaginationBar from "../components/PaginationBar";
 import FriendTabs from "../components/FriendTabs";
 import FriendTable from "../components/FriendTable";
-import { ClipLoader } from "react-spinners";
 import FormSearch from "../components/FormSearch";
 import LoadingSpinner from "../components/LoadingSpinner";
 
