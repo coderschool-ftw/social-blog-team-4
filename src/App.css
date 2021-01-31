@@ -89,3 +89,8 @@
     border: 0px !important;
   }
 }
+.jumbotron-bg {
+  background-image: url("https://i.pinimg.com/originals/4a/4c/49/4a4c4994feeff1854a7d141f4cf73088.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
