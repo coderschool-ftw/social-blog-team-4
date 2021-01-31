@@ -1,23 +1,24 @@
-import React, { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
-import { register } from '../redux/actions/auth.actions';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { Form, Button, Alert } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "../redux/actions/auth.actions";
+import { Link } from "react-router-dom";
 
 const RegisterPage = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const success = useSelector((state) => state.auth.success);
 
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const dispatch = useDispatch();
   const handleSubmit = (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      setError('not same password');
+      setError("Password & confirmedPass must match");
     } else {
-      setError('');
+      setError("");
       dispatch(register(name, email, password));
     }
   };
@@ -25,16 +26,22 @@ const RegisterPage = () => {
   return (
     <div
       className='RegisterPage d-flex justify-content-center align-items-center text-center'
-      style={{ minHeight: '90vh' }}
+      style={{ minHeight: "90vh" }}
     >
       <div
         className='border border-primary px-3 py-5 d-flex flex-column justify-content-center align-items-center'
-        style={{ width: '400px', borderRadius: '1rem' }}
+        style={{ width: "400px", borderRadius: "1rem" }}
       >
         <h1 className='text-primary'>Register</h1>
-        {error && <h2>{error}</h2>}
+        {error && <Alert variant='danger'>{error}</Alert>}
+        {success && (
+          <Alert variant='success'>
+            Welcome, {name} .
+            <Alert.Link href='/login'>Click here to login</Alert.Link>
+          </Alert>
+        )}
         <Form
-          style={{ width: '100%', maxWidth: '330px' }}
+          style={{ width: "100%", maxWidth: "330px" }}
           onSubmit={handleSubmit}
         >
           <Form.Group controlId='formBasicName'>

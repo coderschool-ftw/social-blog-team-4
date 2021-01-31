@@ -1,16 +1,17 @@
-import React, { useEffect } from 'react';
-import { Container } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import Moment from 'react-moment';
-import blogActions from '../redux/actions/blog.actions';
-import Reactions from '../components/Reactions';
-import AddReviewForm from '../components/AddReviewForm';
+import React, { useEffect } from "react";
+import { Container } from "react-bootstrap";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import Moment from "react-moment";
+import blogActions from "../redux/actions/blog.actions";
+import Reactions from "../components/Reactions";
+import AddReviewForm from "../components/AddReviewForm";
 
 const BlogDetailPage = () => {
   const { id } = useParams();
 
   const blog = useSelector((state) => state.blog.blog);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   let reviews;
   if (blog && blog.reviews) {
     reviews = blog.reviews.slice().reverse();
@@ -33,15 +34,20 @@ const BlogDetailPage = () => {
               <div className='Blog-detail'>
                 <div>{blog.title}</div>
                 <div>
-                  @{blog.author.name + ' '}
+                  @{blog.author.name + " "}
                   <Moment fromNow>{blog.author.createdAt}</Moment>
                 </div>
                 <div>{blog.content}</div>
               </div>
 
-              <Reactions blog={blog} dispatch={dispatch} id={id} />
+              <Reactions
+                blog={blog}
+                dispatch={dispatch}
+                id={id}
+                isAuthenticated={isAuthenticated}
+              />
 
-              <AddReviewForm blogId={id} />
+              {isAuthenticated && <AddReviewForm blogId={id} />}
 
               <ul>
                 {reviews.map((r) => (

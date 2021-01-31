@@ -4,6 +4,7 @@ const initialState = {
   isAuthenticated: !!localStorage.getItem("token"),
   loading: false,
   error: null,
+  success: false,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -19,7 +20,7 @@ const authReducer = (state = initialState, action) => {
       return { ...state, user: payload, isAuthenticated: true, loading: false };
     case types.REGISTER_SUCCESS:
     case types.UPDATE_PROFILE_SUCCESS:
-      return { ...state, loading: false };
+      return { ...state, loading: false, success: true };
     case types.GET_CURRENT_USER_SUCCESS:
       return { ...state, user: payload, loading: false };
     case types.LOGIN_FAIL:

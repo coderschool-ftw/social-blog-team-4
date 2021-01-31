@@ -47,7 +47,7 @@ const AdminPage = () => {
                       <Col sm='10'>
                         <Form.Control
                           type='text'
-                          placeholder={user.name}
+                          defaultValue={user.name}
                           onChange={(e) => setName(e.target.value)}
                         />
                       </Col>
@@ -72,14 +72,14 @@ const AdminPage = () => {
           )}
 
           {show && (
-            <>
+            <div className='text-center'>
               <Button variant='primary' onClick={handleSubmit} className='mr-2'>
                 Submit
               </Button>
               <Button variant='light' onClick={() => setShow(false)}>
                 Cancel
               </Button>
-            </>
+            </div>
           )}
         </Col>
       </Row>
